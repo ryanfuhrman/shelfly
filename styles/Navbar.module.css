@@ -1,0 +1,21 @@
+.nav {
+  background-color: lightgray;
+  width: 100%;
+  padding: 2em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navBrand {
+  font-size: 2em;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.navListItems {
+  padding: 0 1em;
+}
