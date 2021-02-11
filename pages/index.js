@@ -9,8 +9,6 @@ export default function Home() {
         <title>Shelfly</title>
       </Head>
 
-      <Navbar />
-
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to Shelfly!</h1>
 
