@@ -10,7 +10,34 @@ export default function Search() {
 
     const searchTerm = document.querySelector(".book-search-input").value;
 
-    const results = getSearchResults(searchTerm);
+    getSearchResults(searchTerm);
+  };
+
+  const getSearchResults = async (searchTerm) => {
+    const res = await fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=${GOOGLE_BOOKS_API_KEY}`
+    );
+    const data = await res.json();
+
+    if (!data) {
+      console.log(`Oops... we didn't find anything for ${searchTerm}`);
+    }
+
+    const {
+      title,
+      authors,
+      description,
+      imageLinks,
+      publishedDate,
+    } = data.items[0].volumeInfo;
+
+    const results = {
+      title,
+      author: authors[0],
+      description,
+      publishedDate,
+      image: imageLinks.thumbnail,
+    };
 
     setSearchResults(results);
   };
@@ -30,33 +57,4 @@ export default function Search() {
       <SearchResults props={searchResults} />
     </>
   );
-}
-
-async function getSearchResults(searchTerm) {
-  const res = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=${GOOGLE_BOOKS_API_KEY}`
-  );
-  const data = await res.json();
-
-  if (!data) {
-    console.log(`Oops... we didn't find anything for ${searchTerm}`);
-  }
-
-  const {
-    title,
-    authors,
-    description,
-    imageLinks,
-    publishedDate,
-  } = data.items[0].volumeInfo;
-
-  const resultData = {
-    title,
-    author: authors[0],
-    description,
-    publishedDate,
-    image: imageLinks.thumbnail,
-  };
-
-  return resultData;
 }
